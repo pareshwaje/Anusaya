@@ -9,7 +9,7 @@ export default function SuperAdminDashboard() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar user={{ name: 'Super Admin', role: 'ADMIN' }} />
       <SuperAdminLayout>
         <div className="bg-white p-6 rounded-md shadow">
           <h2 className="text-2xl font-bold text-purple-800 mb-6">Super Admin Dashboard</h2>

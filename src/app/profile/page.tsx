@@ -3,12 +3,34 @@
 import MemberLayout from '../../components/MemberLayout';
 import { useState } from 'react';
 
+// ✅ Define types for FamilyMember and Vehicle
+type FamilyMember = {
+  name: string;
+  relation: string;
+  aadhar: string;
+};
+
+type Vehicle = {
+  number: string;
+  owner: string;
+  parkingLot: string;
+};
+
 export default function MemberProfilePage() {
-  const [familyMembers, setFamilyMembers] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
-  
-  const [newFamily, setNewFamily] = useState({ name: '', relation: '', aadhar: '' });
-  const [newVehicle, setNewVehicle] = useState({ number: '', owner: '', parkingLot: '' });
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  const [newFamily, setNewFamily] = useState<FamilyMember>({
+    name: '',
+    relation: '',
+    aadhar: '',
+  });
+
+  const [newVehicle, setNewVehicle] = useState<Vehicle>({
+    number: '',
+    owner: '',
+    parkingLot: '',
+  });
 
   const addFamilyMember = () => {
     if (newFamily.name && newFamily.relation && newFamily.aadhar) {
