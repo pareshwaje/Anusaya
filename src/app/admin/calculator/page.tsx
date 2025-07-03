@@ -4,9 +4,9 @@ import AdminLayout from "@/components/AdminLayout";
 import { useState } from "react";
 
 export default function CalculatorPage() {
-  const [maintenanceAmount, setMaintenanceAmount] = useState(2500);
-  const [interestRate, setInterestRate] = useState(2); // percent per month after 3 months
-  const [history, setHistory] = useState([
+  const [maintenanceAmount] = useState(2500);
+  const [interestRate] = useState(2); // percent per month after 3 months
+  const [history] = useState([
     {
       date: "2024-06-01",
       field: "maintenance",

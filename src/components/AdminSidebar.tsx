@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldCheck, Users, Car, Calculator } from 'lucide-react';
+import { ShieldCheck, Car, Calculator } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AdminSidebar() {

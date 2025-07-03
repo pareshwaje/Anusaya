@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 interface Props {
   onClose: () => void;
@@ -9,7 +10,7 @@ interface Props {
 
 export default function MarkAsPaidModal({ onClose, onConfirm }: Props) {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [transactionId, setTransactionId] = useState("");
   const [chequeNo, setChequeNo] = useState("");
   const [bankName, setBankName] = useState("");
@@ -116,10 +117,12 @@ export default function MarkAsPaidModal({ onClose, onConfirm }: Props) {
         {/* Dummy Payment Info */}
         {showQR && (
           <div className="mt-4 text-black text-sm bg-white rounded p-3 border border-purple-300 text-center">
-            <img
+            <Image
               src="/qr-code.png"
               alt="QR Code"
-              className="mx-auto w-24 h-24 mb-2"
+              width={96}
+              height={96}
+              className="mx-auto mb-2"
             />
             <p>
               Pay to: <strong>society@upi</strong>
@@ -150,7 +153,7 @@ export default function MarkAsPaidModal({ onClose, onConfirm }: Props) {
         </label>
         <input
           type="file"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          // onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="w-full p-2 bg-white border border-purple-300 rounded"
         />
 
