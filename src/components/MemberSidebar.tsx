@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, FileText, Users, Car } from 'lucide-react';
+import { Home } from 'lucide-react';
 import Link from 'next/link';
 
 export default function MemberSidebar() {

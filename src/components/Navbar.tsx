@@ -1,4 +1,4 @@
-﻿'use client';
+﻿﻿'use client';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
@@ -7,17 +7,6 @@ export default function Navbar() {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  if (pathname === '/login') return null;
-
-  const handleLogout = () => {
-    localStorage.removeItem('userRole');
-    router.push('/login');
-  };
-
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -29,6 +18,17 @@ export default function Navbar() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  if (pathname === '/login') return null;
+
+  const handleLogout = () => {
+    localStorage.removeItem('userRole');
+    router.push('/login');
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   return (
     <div className="flex items-center justify-between bg-purple-100 px-6 py-4 shadow-sm border-b">
