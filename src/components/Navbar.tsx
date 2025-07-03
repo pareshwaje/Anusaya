@@ -3,12 +3,14 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
-type User = {
-  name: string;
-  role: 'ADMIN' | 'MEMBER';
-};
+interface NavbarProps {
+  user: {
+    name: string;
+    role: string;
+  };
+}
 
-export default function Navbar({ user }: { user: User }) {
+export default function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -38,7 +40,9 @@ export default function Navbar({ user }: { user: User }) {
 
   return (
     <div className="flex items-center justify-between bg-purple-100 px-6 py-4 shadow-sm border-b">
-      <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
+      <h1 className="text-xl font-semibold text-gray-800 capitalize">
+        {user.role.toLowerCase()} Dashboard
+      </h1>
 
       <div className="relative" ref={dropdownRef}>
         <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
@@ -55,13 +59,13 @@ export default function Navbar({ user }: { user: User }) {
                 setShowDropdown(false);
                 router.push('/profile');
               }}
-              className="w-full text-left px-4 py-2 hover:bg-purple-50 text-sm text-gray-700 cursor-pointer"
+              className="w-full text-left px-4 py-2 hover:bg-purple-50 text-sm text-gray-700"
             >
               Profile
             </button>
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 hover:bg-purple-50 text-sm text-gray-700 cursor-pointer"
+              className="w-full text-left px-4 py-2 hover:bg-purple-50 text-sm text-gray-700"
             >
               Logout
             </button>
