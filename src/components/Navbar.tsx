@@ -1,8 +1,14 @@
-﻿﻿'use client';
+﻿'use client';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
-export default function Navbar() {
+type User = {
+  name: string;
+  role: 'ADMIN' | 'MEMBER';
+};
+
+export default function Navbar({ user }: { user: User }) {
   const pathname = usePathname();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -36,7 +42,7 @@ export default function Navbar() {
 
       <div className="relative" ref={dropdownRef}>
         <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
-          <span className="text-sm text-gray-800 hidden sm:inline">Aarav Sharma</span>
+          <span className="text-sm text-gray-800 hidden sm:inline">{user.name}</span>
           <div className="w-8 h-8 rounded-full ring-2 ring-purple-800 text-purple-800 flex items-center justify-center">
             👤
           </div>
