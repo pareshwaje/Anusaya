@@ -1,0 +1,31 @@
+﻿
+> anusaya-society-app@0.1.0 lint
+> next lint
+
+node.exe : Invalid 
+project directory 
+provided, no such 
+directory: C:\Users\p
+ares\Desktop\Societyf
+low\Anusaya\lint
+At line:1 char:1
++ & "C:\Program Files
+\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo   
+           : NotSpe  
+  cified: (Invalid   
+  project...ow\An    
+usaya\lint:Strin    
+g) [], RemoteExc    
+eption
+    + FullyQualified 
+   ErrorId : Native  
+  CommandError
+ 

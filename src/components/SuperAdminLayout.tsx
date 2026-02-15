@@ -1,22 +1,22 @@
 'use client';
 
 import SuperAdminSidebar from './SuperAdminSidebar';
+import Navbar from './Navbar';
+import { cn } from '@/lib/utils';
 
 export default function SuperAdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-background text-foreground">
       {/* Sidebar */}
       <SuperAdminSidebar />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Top Navbar */}
-        <header className="bg-purple-700 text-white px-6 py-4 shadow">
-          <h1 className="text-xl font-semibold">Anusaya Society — Super Admin Panel</h1>
-        </header>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Navbar used to be hardcoded, now using Navbar component for consistency */}
+        <Navbar user={{ name: 'Super Admin', role: 'SUPER ADMIN' }} />
 
         {/* Page Content */}
-        <main className="p-6 bg-[#f5f7ff] flex-1 overflow-y-auto">
+        <main className="p-6 flex-1 overflow-y-auto bg-muted/30">
           {children}
         </main>
       </div>

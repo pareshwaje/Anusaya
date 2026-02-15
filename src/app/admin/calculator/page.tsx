@@ -1,131 +1,104 @@
-"use client";
+'use client';
 
-import AdminLayout from "@/components/AdminLayout";
-import { useState } from "react";
+import { useState } from 'react';
+import AdminLayout from '@/components/AdminLayout';
+import { Calculator, ArrowRight, IndianRupee, Home, Percent } from 'lucide-react';
 
 export default function CalculatorPage() {
-  const [maintenanceAmount] = useState(2500);
-  const [interestRate] = useState(2); // percent per month after 3 months
-  const [history] = useState([
-    {
-      date: "2024-06-01",
-      field: "maintenance",
-      value: 2500,
-      updatedBy: "SuperAdmin",
-    },
-    {
-      date: "2024-06-15",
-      field: "interest",
-      value: 2,
-      updatedBy: "SuperAdmin",
-    },
-  ]);
+  const [sqft, setSqft] = useState('');
+  const [rate, setRate] = useState('2.5');
+  const [total, setTotal] = useState<number | null>(null);
 
-  const [unpaidMonths, setUnpaidMonths] = useState(0);
-  const [calculatedAmount, setCalculatedAmount] = useState<number | null>(null);
-
-  const calculateTotal = () => {
-  let total = 0;
-
-  for (let i = 1; i <= unpaidMonths; i++) {
-    total += maintenanceAmount;
-
-    // Apply interest every 3 months (on the updated total)
-    if (i % 3 === 0 && i >= 3) {
-      total += (total * interestRate) / 100;
+  const calculate = () => {
+    const area = parseFloat(sqft);
+    const r = parseFloat(rate);
+    if (!isNaN(area) && !isNaN(r)) {
+      setTotal(area * r);
     }
-  }
-
-  setCalculatedAmount(Math.round(total));
-};
+  };
 
   return (
     <AdminLayout>
-      <div className="bg-white p-6 rounded-md shadow">
-        <div className="flex items-center justify-between mb-6">
+      <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+        {/* Header */}
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl text-white shadow-lg shadow-green-500/30">
+            <Calculator className="w-8 h-8" />
+          </div>
           <div>
-            <h2 className="text-2xl font-bold text-purple-800">
-              Maintenance Calculator
-            </h2>
-            <p className="text-gray-500">Only Super Admins can edit rates</p>
+            <h1 className="text-3xl font-bold text-gray-800">Maintenance Calculator</h1>
+            <p className="text-gray-500">Estimate monthly maintenance charges based on flat area.</p>
           </div>
         </div>
 
-        {/* Current Settings */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-purple-50 p-4 rounded border border-purple-200">
-            <p className="text-sm text-gray-600 mb-1">Current Maintenance</p>
-            <h3 className="text-xl font-semibold text-purple-800">
-              ₹{maintenanceAmount}
-            </h3>
-          </div>
-          <div className="bg-purple-50 p-4 rounded border border-purple-200">
-            <p className="text-sm text-gray-600 mb-1">
-              Interest Rate (monthly after 3 months)
-            </p>
-            <h3 className="text-xl font-semibold text-purple-800">
-              {interestRate}%
-            </h3>
-          </div>
-        </div>
-
-        {/* Calculator */}
-        <div className="bg-gray-100 p-4 rounded mb-6">
-          <label className="block font-medium mb-2 text-black">
-            Number of Unpaid Months
-          </label>
-          <input
-            type="number"
-            value={unpaidMonths}
-            onChange={(e) => setUnpaidMonths(Number(e.target.value))}
-            className="w-full p-2 border border-gray-300 rounded mb-4 text-black"
-            min={1}
-            placeholder="Enter months unpaid"
-          />
-          <button
-            onClick={calculateTotal}
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-          >
-            Calculate Total Due
-          </button>
-
-          {calculatedAmount !== null && (
-            <div className="mt-4 text-lg text-black">
-              <p>
-                Total Due:{" "}
-                <span className="font-bold text-purple-800">
-                  ₹{calculatedAmount}
-                </span>
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Input Card */}
+          <div className="bg-white/60 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-8 space-y-6">
+            <div className="space-y-4">
+              <label className="block text-sm font-semibold text-gray-700">Flat Area (sq. ft.)</label>
+              <div className="relative">
+                <Home className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="number"
+                  value={sqft}
+                  onChange={(e) => setSqft(e.target.value)}
+                  placeholder="e.g. 1200"
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 text-lg font-medium shadow-sm transition-all"
+                />
+              </div>
             </div>
-          )}
-        </div>
 
-        {/* Change History */}
-        <div className="bg-white border p-4 rounded shadow">
-          <h3 className="text-lg font-semibold text-purple-800 mb-3">
-            Change History
-          </h3>
-          <table className="w-full text-left text-sm text-black">
-            <thead className="border-b border-gray-300">
-              <tr>
-                <th className="py-2">Date</th>
-                <th>Field</th>
-                <th>Value</th>
-                <th>Updated By</th>
-              </tr>
-            </thead>
-            <tbody>
-              {history.map((entry, i) => (
-                <tr key={i} className="border-t border-gray-200">
-                  <td className="py-2">{entry.date}</td>
-                  <td>{entry.field}</td>
-                  <td>{entry.value}</td>
-                  <td>{entry.updatedBy}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <div className="space-y-4">
+              <label className="block text-sm font-semibold text-gray-700">Maintenance Rate (per sq. ft.)</label>
+              <div className="relative">
+                <Percent className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="number"
+                  value={rate}
+                  onChange={(e) => setRate(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/50 border border-white/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 text-lg font-medium shadow-sm transition-all"
+                />
+              </div>
+              <p className="text-xs text-gray-500 ml-1">* Default rate set by society rules.</p>
+            </div>
+
+            <button
+              onClick={calculate}
+              className="w-full py-4 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl font-bold text-lg shadow-xl shadow-gray-500/30 hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"
+            >
+              Calculate <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Result Card */}
+          <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden flex flex-col justify-center items-center text-center">
+            {/* Decorative background */}
+            <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Calculator className="w-64 h-64 transform rotate-12" />
+            </div>
+
+            <div className="relative z-10 space-y-2">
+              <h2 className="text-indigo-200 font-medium text-lg">Estimated Monthly Maintenance</h2>
+              <div className="flex items-center justify-center gap-1">
+                <IndianRupee className="w-8 h-8 opacity-80" />
+                <span className="text-6xl font-bold tracking-tight">
+                  {total ? total.toLocaleString() : '0'}
+                </span>
+              </div>
+              {total && (
+                <div className="pt-6 border-t border-white/10 mt-6 w-full">
+                  <div className="flex justify-between text-sm opacity-80 mb-2">
+                    <span>Annual Estimate</span>
+                    <span>₹ {(total * 12).toLocaleString()}</span>
+                  </div>
+                  <p className="text-xs text-indigo-300 mt-4 bg-black/20 px-3 py-2 rounded-lg">
+                    *This is an estimate. Actual charges may vary based on additional penalties or funds.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </AdminLayout>
